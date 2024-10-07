@@ -5,7 +5,7 @@ export default function Home() {
     <main className="w-screen h-screen flex justify-center items-center">
       <Card.Card className="w-[30rem]">
         <Card.CardHeader>
-          <Card.CardTitle>로그인</Card.CardTitle>
+          <Card.CardTitle>로그 인</Card.CardTitle>
         </Card.CardHeader>
         <Card.CardContent className="flex flex-col gap-y-2 pb-4">
           <Input placeholder="아이디를 입력하세요." />
