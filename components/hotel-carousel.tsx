@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import Slider from "react-slick";
-import Image from "next/image";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React, { useState } from "react"
+import Slider from "react-slick"
+import Image from "next/image"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
-const images = ["/main.webp", "/main2.webp"];
+const images = ["/main.webp", "/main2.webp"]
 
 export function HotelMainCarouselComponent() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   const settings = {
     dots: false,
@@ -19,10 +19,10 @@ export function HotelMainCarouselComponent() {
     slidesToScroll: 1,
     beforeChange: (oldIndex: number, newIndex: number) =>
       setCurrentSlide(newIndex),
-  };
+  }
 
   return (
-    <div className="relative w-full h-[600px]">
+    <div className="relative w-full h-[600px] overflow-hidden">
       <Slider {...settings} className="h-full">
         {images.map((src, index) => (
           <div key={index} className="relative w-full h-[600px]">
@@ -40,5 +40,5 @@ export function HotelMainCarouselComponent() {
         {currentSlide + 1} / {images.length}
       </div>
     </div>
-  );
+  )
 }

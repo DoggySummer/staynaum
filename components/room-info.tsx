@@ -20,8 +20,18 @@ export function RoomInfoComponent() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h2 className="text-2xl font-bold mb-6">객실 정보</h2>
-      <div className="flex flex-wrap -mx-4">
+      <div className="flex flex-wrap -mx-4 justify-center">
+        <div className="w-full md:w-1/4 px-4">
+          <h2 className="text-2xl font-bold mb-6">객실 정보</h2>
+          <h3 className="text-xl font-bold mb-4">₩270,000 / 1박</h3>
+          <p className="mb-2">체크인 16:00 / 체크아웃 11:00</p>
+          <p className="mb-2">기준인원 4명(최대 인원 5명)</p>
+          <p className="mb-4">객실면적 66.22㎡</p>
+          <p className="mb-4">퀸 침대 2</p>
+          <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded">
+            편의시설 모두 보기
+          </button>
+        </div>
         <div className="w-full md:w-1/2 px-4 mb-8 md:mb-0">
           <div className="relative h-96">
             {roomImages.map((src, index) => (
@@ -56,16 +66,6 @@ export function RoomInfoComponent() {
               </button>
             </div>
           </div>
-        </div>
-        <div className="w-full md:w-1/2 px-4">
-          <h3 className="text-xl font-bold mb-4">₩270,000 / 1박</h3>
-          <p className="mb-2">체크인 16:00 / 체크아웃 11:00</p>
-          <p className="mb-2">기준인원 4명(최대 인원 5명)</p>
-          <p className="mb-4">객실면적 66.22㎡</p>
-          <p className="mb-4">침실 2개</p>
-          <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded">
-            편의시설 모두 보기
-          </button>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import Link from 'next/link'
+import Link from "next/link"
 
 export function NavbarComponent() {
   return (
@@ -14,17 +14,29 @@ export function NavbarComponent() {
           </div>
           <div className="flex items-center">
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link href="/about" className="text-gray-800 hover:text-gray-600 px-3 py-2 text-sm font-medium">
+              <Link
+                href="/about"
+                className="text-gray-800 hover:text-gray-600 px-3 py-2 text-sm font-medium"
+              >
                 호텔소개
               </Link>
-              <Link href="/inquiry" className="text-gray-800 hover:text-gray-600 px-3 py-2 text-sm font-medium">
+              <Link
+                href="/inquiry"
+                className="text-gray-800 hover:text-gray-600 px-3 py-2 text-sm font-medium"
+              >
                 고객문의
               </Link>
-              <Link href="/offers" className="text-gray-800 hover:text-gray-600 px-3 py-2 text-sm font-medium">
+              <Link
+                href="/offers"
+                className="text-gray-800 hover:text-gray-600 px-3 py-2 text-sm font-medium"
+              >
                 특별한 제안
               </Link>
               <span className="text-gray-300">|</span>
-              <Link href="/login" className="text-gray-500 hover:text-gray-600 px-3 py-2 text-sm font-medium">
+              <Link
+                href="/login"
+                className="text-gray-500 hover:text-gray-600 px-3 py-2 text-sm font-medium"
+              >
                 로그인
               </Link>
               <span className="text-gray-500 hover:text-gray-600 px-3 py-2 text-sm font-medium">
