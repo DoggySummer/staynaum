@@ -18,13 +18,17 @@ import {
 import { ReactElement } from "react"
 
 const AmenityItem = ({ icon, text }: { icon: ReactElement; text: string }) => (
-  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+  <div className="flex items-center p-4 bg-gray-50 rounded-lg justify-center">
     {icon}
-    <span className="text-sm font-medium text-gray-700">{text}</span>
+    <span className="text-sm font-medium text-gray-700 ml-5">{text}</span>
   </div>
 )
 
 const amenities = [
+  { icon: <Wifi />, text: "무선 인터넷" },
+  { icon: <Car />, text: "주차장" },
+  { icon: <Utensils />, text: "개별 BBQ 데크" },
+  { icon: <Tv />, text: "스마트 TV" },
   { icon: <Wifi />, text: "무선 인터넷" },
   { icon: <Car />, text: "주차장" },
   { icon: <Utensils />, text: "개별 BBQ 데크" },
@@ -42,7 +46,7 @@ const amenities = [
 export function AmenitiesGridComponent() {
   return (
     <section className="py-12 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-8">
           편의 시설
         </h2>

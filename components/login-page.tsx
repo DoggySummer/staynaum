@@ -6,12 +6,22 @@ import { Label } from "@/components/ui/label"
 import Image from "next/image"
 
 export function LoginPageComponent() {
+  const goNaverLogin = () => {
+    window.location.href =
+      "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
+      process.env.NEXT_PUBLIC_NAVERID_LOGIN +
+      "&redirect_uri=" +
+      "http://localhost:3000" +
+      "&state=" +
+      "asd2222222"
+  }
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2 className="mt-3 text-center text-3xl font-extrabold text-gray-900 pb-20">
               로그인
             </h2>
           </div>
@@ -26,7 +36,7 @@ export function LoginPageComponent() {
                   name="id"
                   type="text"
                   required
-                  className="appearance-none relative block w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-500 sm:text-sm"
+                  className="outline-none focus:outline-none appearance-none relative block w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 placeholder-gray-500 text-gray-900 sm:text-sm"
                   placeholder="아이디"
                 />
               </div>
@@ -39,7 +49,7 @@ export function LoginPageComponent() {
                   name="password"
                   type="password"
                   required
-                  className="appearance-none relative block w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-0 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none relative block w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none sm:text-sm"
                   placeholder="비밀번호"
                 />
               </div>
@@ -70,10 +80,11 @@ export function LoginPageComponent() {
                 <Button
                   variant="outline"
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  onClick={goNaverLogin}
                 >
                   <Image
                     className="h-5 w-5"
-                    src="/placeholder.svg?height=20&width=20"
+                    src="/sns_naver.svg"
                     alt="Naver logo"
                     width={20}
                     height={20}
@@ -87,7 +98,7 @@ export function LoginPageComponent() {
                 >
                   <Image
                     className="h-5 w-5"
-                    src="/placeholder.svg?height=20&width=20"
+                    src="/kakao.webp"
                     alt="Kakao logo"
                     width={20}
                     height={20}
