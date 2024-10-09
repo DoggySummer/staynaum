@@ -1,10 +1,9 @@
-import { BookingFormComponent } from "@/components/booking-form"
-import { FooterComponent } from "@/components/footer"
-import { HotelMainCarouselComponent } from "@/components/hotel-carousel"
-import { MapPlaceholderComponent } from "@/components/map-placeholder"
-import { NavbarComponent } from "@/components/navbar"
-import { RoomInfoComponent } from "@/components/room-info"
+import { LoginPageComponent } from "@/components/login-page"
 
 export default function Home() {
-  return <main></main>
+  return (
+    <main>
+      <LoginPageComponent />
+    </main>
+  )
 }
