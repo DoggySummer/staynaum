@@ -10,6 +10,7 @@ import {
   Plus,
   Minus,
 } from "lucide-react"
+import { ko } from "date-fns/locale"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
@@ -29,8 +30,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Calendar } from "@/components/ui/calendar"
+import { DateRange } from "react-day-picker"
 
-export function ReservationPage() {
+export default function page() {
   const [bbqOption, setBbqOption] = useState(false)
   const [spaCount, setSpaCount] = useState(0)
   const [appliedCoupon, setAppliedCoupon] = useState("")
@@ -41,8 +44,11 @@ export function ReservationPage() {
     minor: false,
     refund: false,
   })
-
-  const [guests, setGuests] = useState({ adults: 3, children: 2, infants: 1 })
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(2024, 9, 15),
+    to: new Date(2024, 9, 19),
+  })
+  const [guests, setGuests] = useState({ adults: 3, children: 0, infants: 0 })
 
   const basePrice = 400000
   const bbqPrice = 30000
@@ -53,7 +59,7 @@ export function ReservationPage() {
   }
 
   const [totalPrice, setTotalPrice] = useState(basePrice * calculateNights())
-
+  const [checkIn, setCheckIn] = useState<Date>()
   function calculateNights() {
     return 4 // 고정된 박 수
   }
@@ -108,7 +114,7 @@ export function ReservationPage() {
   const totalGuests = guests.adults + guests.children + guests.infants
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 my-12">
       <h1 className="text-3xl font-bold mb-6">숙박 예약</h1>
       <div className="grid lg:grid-cols-[1fr_400px] gap-6">
         <div className="space-y-6">
@@ -122,12 +128,28 @@ export function ReservationPage() {
                   <CalendarDays className="text-gray-500" />
                   <span>2024.10.11 ~ 2024.10.14 (4박)</span>
                 </div>
-                <Button
-                  variant="outline"
-                  className="bg-white hover:bg-black hover:text-white transition-colors"
-                >
-                  수정하기
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="bg-white hover:bg-black hover:text-white transition-colors"
+                    >
+                      수정하기
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle>날짜 변경</DialogTitle>
+                    </DialogHeader>
+                    <Calendar
+                      mode="range"
+                      selected={dateRange}
+                      onSelect={setDateRange}
+                      numberOfMonths={2}
+                      locale={ko}
+                    />
+                  </DialogContent>
+                </Dialog>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -146,7 +168,7 @@ export function ReservationPage() {
                       수정하기
                     </Button>
                   </DialogTrigger>
-                  <DialogContent>
+                  <DialogContent className="max-w-md">
                     <DialogHeader>
                       <DialogTitle>인원 수정</DialogTitle>
                     </DialogHeader>

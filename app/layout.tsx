@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
+import { SessionProvider } from "next-auth/react"
 import localFont from "next/font/local"
 import "./globals.css"
 import { NavbarComponent } from "@/components/navbar"
 import { FooterComponent } from "@/components/footer"
+import { Providers } from "./providers/providers"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,9 +36,11 @@ export default function RootLayout({
           type="text/javascript"
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERID_MAP}`}
         ></script>
-        <NavbarComponent />
-        {children}
-        <FooterComponent />
+        <Providers>
+          <NavbarComponent />
+          {children}
+          <FooterComponent />
+        </Providers>
       </body>
     </html>
   )
