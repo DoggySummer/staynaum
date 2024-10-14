@@ -3,19 +3,18 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+
+import { useSession, signIn, signOut } from "next-auth/react"
+
 import Image from "next/image"
 
 export default function page() {
-  const goNaverLogin = () => {
-    window.location.href =
-      "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
-      process.env.NEXT_PUBLIC_NAVERID_LOGIN +
-      "&redirect_uri=" +
-      "http://localhost:3000" +
-      "&state=" +
-      "asd2222222"
-  }
+  const { data: session } = useSession()
 
+  if (session) {
+    console.log(session)
+    return <>성공했음 ㅋㅋㅋㅋㅋ</>
+  }
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -80,7 +79,7 @@ export default function page() {
                 <Button
                   variant="outline"
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                  onClick={goNaverLogin}
+                  onClick={() => signIn("naver")}
                 >
                   <Image
                     className="h-5 w-5"
@@ -95,6 +94,7 @@ export default function page() {
                 <Button
                   variant="outline"
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  onClick={() => signIn("kakao")}
                 >
                   <Image
                     className="h-5 w-5"
