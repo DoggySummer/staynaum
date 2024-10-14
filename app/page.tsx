@@ -9,7 +9,7 @@ export default function Home() {
       <HotelMainCarouselComponent />
       <BookingFormComponent />
       <RoomInfoComponent />
-      {/* <MapPlaceholderComponent /> */}
+      <MapPlaceholderComponent />
     </main>
   )
 }

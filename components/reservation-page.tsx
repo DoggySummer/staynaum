@@ -79,7 +79,15 @@ export function ReservationPage() {
   }
 
   const allAgreed = Object.values(agreements).every(Boolean)
-
+  const handleAccordionItemClick = (
+    e: React.MouseEvent,
+    key: "privacy" | "minor" | "refund"
+  ) => {
+    // 체크박스 클릭 시 아코디언 토글 방지
+    if ((e.target as HTMLElement).closest(".checkbox-wrapper")) {
+      e.preventDefault()
+    }
+  }
   const applyCoupon = () => {
     if (couponInput in coupons) {
       setAppliedCoupon(couponInput)
@@ -300,87 +308,78 @@ export function ReservationPage() {
             </CardContent>
           </Card>
 
+          {/* 이자리임 */}
+
           <Card>
             <CardHeader>
               <CardTitle>동의사항</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="privacy">
-                  <AccordionTrigger>
+                {[
+                  { key: "privacy", label: "개인정보 제 3자 제공 동의 (필수)" },
+                  {
+                    key: "minor",
+                    label: "미성년자(청소년) 투숙 기준 동의 (필수)",
+                  },
+                  {
+                    key: "refund",
+                    label: "스테이 나음 - 환불규정에 대한 동의 (필수)",
+                  },
+                ].map(({ key, label }) => (
+                  <AccordionItem
+                    key={key}
+                    value={key}
+                    onClick={(e) =>
+                      handleAccordionItemClick(
+                        e,
+                        key as "privacy" | "minor" | "refund"
+                      )
+                    }
+                  >
                     <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="privacy"
-                        checked={agreements.privacy}
-                        onCheckedChange={() => handleAgreementChange("privacy")}
-                      />
-                      <Label htmlFor="privacy">
-                        개인정보 제 3자 제공 동의 (필수)
-                      </Label>
+                      <div className="checkbox-wrapper">
+                        <Checkbox
+                          id={key}
+                          checked={agreements[key as keyof typeof agreements]}
+                          onCheckedChange={() =>
+                            handleAgreementChange(
+                              key as "privacy" | "minor" | "refund"
+                            )
+                          }
+                        />
+                      </div>
+                      <AccordionTrigger className="flex-grow">
+                        <span>{label}</span>
+                      </AccordionTrigger>
                     </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="minor">
-                  <AccordionTrigger>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="minor"
-                        checked={agreements.minor}
-                        onCheckedChange={() => handleAgreementChange("minor")}
-                      />
-                      <Label htmlFor="minor">
-                        미성년자(청소년) 투숙 기준 동의 (필수)
-                      </Label>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="refund">
-                  <AccordionTrigger>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="refund"
-                        checked={agreements.refund}
-                        onCheckedChange={() => handleAgreementChange("refund")}
-                      />
-                      <Label htmlFor="refund">
-                        스테이 나음 - 환불규정에 대한 동의 (필수)
-                      </Label>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    Ut enim ad minima veniam, quis nostrum exercitationem ullam
-                    corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-                    consequatur? Quis autem vel eum iure reprehenderit qui in ea
-                    voluptate velit esse quam nihil molestiae consequatur.
-                  </AccordionContent>
-                </AccordionItem>
+                    <AccordionContent>
+                      {/* 각 항목에 대한 상세 내용 */}
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
               </Accordion>
               <div className="flex items-center space-x-2 pt-4">
                 <Checkbox
                   id="all-agreements"
                   checked={allAgreed}
-                  onCheckedChange={handleAllAgreements}
+                  onCheckedChange={(checked) =>
+                    handleAllAgreements(checked as boolean)
+                  }
                 />
-                <Label htmlFor="all-agreements" className="font-semibold">
+                <Label
+                  htmlFor="all-agreements"
+                  className="font-semibold text-base cursor-pointer"
+                >
                   사용자 약관 전체 동의
                 </Label>
               </div>
             </CardContent>
           </Card>
         </div>
-
         <div className="lg:sticky lg:top-4 lg:self-start mb-20 lg:mb-0">
           <Card>
             <CardHeader>
