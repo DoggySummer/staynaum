@@ -25,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 export function BookingFormComponent() {
   const [checkIn, setCheckIn] = useState<Date>()
@@ -181,12 +182,14 @@ export function BookingFormComponent() {
           </div>
         </div>
         <div className="w-full px-2 mt-4">
-          <button
-            type="submit"
-            className="w-full bg-red-800 text-white font-bold py-2 px-4 rounded hover:bg-red-700 transition-colors"
-          >
-            검색
-          </button>
+          <Link href="reserve">
+            <button
+              type="submit"
+              className="w-full bg-red-800 text-white font-bold py-2 px-4 rounded hover:bg-red-700 transition-colors"
+            >
+              검색
+            </button>
+          </Link>
         </div>
       </form>
     </div>
