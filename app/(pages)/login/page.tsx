@@ -11,10 +11,6 @@ import Image from "next/image"
 export default function page() {
   const { data: session } = useSession()
 
-  if (session) {
-    console.log(session)
-    return <>성공했음 ㅋㅋㅋㅋㅋ</>
-  }
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
