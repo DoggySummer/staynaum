@@ -17,8 +17,8 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "스테이나음",
-  description: "스테이나음 사이트입니다",
+  title: "Stay Naum",
+  description: "Welcome to StayNaum",
 }
 
 export default function RootLayout({
