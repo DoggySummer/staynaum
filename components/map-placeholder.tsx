@@ -4,12 +4,12 @@ import React, { useEffect } from "react"
 
 export function MapPlaceholderComponent() {
   useEffect(() => {
-    var mapOptions = {
+    const mapOptions = {
       center: new naver.maps.LatLng(33.50564, 126.635154),
       zoom: 18,
     }
 
-    var map = new naver.maps.Map("map", mapOptions)
+    const map = new naver.maps.Map("map", mapOptions)
   }, [])
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

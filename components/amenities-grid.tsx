@@ -1,20 +1,5 @@
 "use client"
-import {
-  Car,
-  Utensils,
-  Tv,
-  Coffee,
-  Wind,
-  AirVent,
-  Droplets,
-  Snowflake,
-  Waves,
-  Sun,
-  Shirt,
-  LucideIcon,
-  Icon,
-  Wifi,
-} from "lucide-react"
+import { Car, Utensils, Tv, Wifi } from "lucide-react"
 import { ReactElement } from "react"
 
 const AmenityItem = ({ icon, text }: { icon: ReactElement; text: string }) => (
