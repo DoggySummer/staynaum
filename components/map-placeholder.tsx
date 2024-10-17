@@ -9,7 +9,7 @@ export function MapPlaceholderComponent() {
       zoom: 18,
     }
 
-    const map = new naver.maps.Map("map", mapOptions)
+    new naver.maps.Map("map", mapOptions)
   }, [])
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

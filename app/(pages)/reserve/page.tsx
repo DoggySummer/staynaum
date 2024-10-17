@@ -33,7 +33,7 @@ import {
 import { Calendar } from "@/components/ui/calendar"
 import { DateRange } from "react-day-picker"
 
-export default function page() {
+export default function Page() {
   const [bbqOption, setBbqOption] = useState(false)
   const [spaCount, setSpaCount] = useState(0)
   const [appliedCoupon, setAppliedCoupon] = useState("")
@@ -59,7 +59,6 @@ export default function page() {
   }
 
   const [totalPrice, setTotalPrice] = useState(basePrice * calculateNights())
-  const [checkIn, setCheckIn] = useState<Date>()
   function calculateNights() {
     return 4 // 고정된 박 수
   }
@@ -317,7 +316,7 @@ export default function page() {
               </div>
               {appliedCoupon && (
                 <p className="text-sm text-green-600">
-                  "{appliedCoupon}" 쿠폰이 적용되었습니다. (
+                  &quot;{appliedCoupon}&quot; 쿠폰이 적용되었습니다. (
                   {coupons[
                     appliedCoupon as keyof typeof coupons
                   ].toLocaleString()}

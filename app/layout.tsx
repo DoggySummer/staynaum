@@ -33,6 +33,7 @@ export default function RootLayout({
       >
         <script
           type="text/javascript"
+          defer
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERID_MAP}`}
         ></script>
         <Providers>

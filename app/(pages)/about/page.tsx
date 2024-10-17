@@ -2,7 +2,7 @@ import { AmenitiesGridComponent } from "@/components/amenities-grid"
 import Image from "next/image"
 import React from "react"
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <div className="relative w-full h-[400px]">
@@ -16,12 +16,13 @@ const page = () => {
       <h1 className="text-3xl font-bold text-center my-8">스테이 나음</h1>
       <div className="max-w-3xl mx-auto px-4 ">
         <p className="mb-8">
-          골반과 돌담이 어우러진 제주 화롯마을에 너른 마당을 품은 '스테이
-          나음'이 있습니다. 1980년대에 지어진 건물의 가치를 잇자 않고자 고전적인
-          외부는 유지하고, 내부는 제주의 풍경과 빛, 소리를 담을 수 있는 도화지의
-          역할을 하도록 구성했습 니다. 공간의 창은 제주의 자연을 비추보며 새로운
-          마음을 마주하게 합니다. 마루는 돌안 모든 외부의 자극에서 물러나 마
-          음을 대면하고 치유에 이르길 바라는 호스트의 바람이 묻어나 있습니다.
+          골반과 돌담이 어우러진 제주 화롯마을에 너른 마당을 품은 &apos;스테이
+          나음&apos;이 있습니다. 1980년대에 지어진 건물의 가치를 잇자 않고자
+          고전적인 외부는 유지하고, 내부는 제주의 풍경과 빛, 소리를 담을 수 있는
+          도화지의 역할을 하도록 구성했습 니다. 공간의 창은 제주의 자연을
+          비추보며 새로운 마음을 마주하게 합니다. 마루는 돌안 모든 외부의
+          자극에서 물러나 마 음을 대면하고 치유에 이르길 바라는 호스트의 바람이
+          묻어나 있습니다.
         </p>
         <p className="mb-10">
           스테이 나음은 외부와 내부로 나누어져 있으며 모든 공간에서 자연의
@@ -37,4 +38,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
