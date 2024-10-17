@@ -69,7 +69,7 @@ export default function Page() {
     price += spaCount * spaPrice
     if (appliedCoupon) price -= coupons[appliedCoupon as keyof typeof coupons]
     setTotalPrice(price)
-  }, [bbqOption, spaCount, appliedCoupon])
+  }, [bbqOption, spaCount, appliedCoupon, coupons])
 
   const handleAgreementChange = (key: "privacy" | "minor" | "refund") => {
     setAgreements((prev) => ({ ...prev, [key]: !prev[key] }))
@@ -84,10 +84,7 @@ export default function Page() {
   }
 
   const allAgreed = Object.values(agreements).every(Boolean)
-  const handleAccordionItemClick = (
-    e: React.MouseEvent,
-    key: "privacy" | "minor" | "refund"
-  ) => {
+  const handleAccordionItemClick = (e: React.MouseEvent) => {
     // 체크박스 클릭 시 아코디언 토글 방지
     if ((e.target as HTMLElement).closest(".checkbox-wrapper")) {
       e.preventDefault()
@@ -351,12 +348,7 @@ export default function Page() {
                   <AccordionItem
                     key={key}
                     value={key}
-                    onClick={(e) =>
-                      handleAccordionItemClick(
-                        e,
-                        key as "privacy" | "minor" | "refund"
-                      )
-                    }
+                    onClick={(e) => handleAccordionItemClick(e)}
                   >
                     <div className="flex items-center space-x-2">
                       <div className="checkbox-wrapper">

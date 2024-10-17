@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import { useSession, signIn, signOut } from "next-auth/react"
+import { signIn } from "next-auth/react"
 
 import Image from "next/image"
 
 export default function Page() {
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
