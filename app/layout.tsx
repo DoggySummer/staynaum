@@ -18,7 +18,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "StayNaum",
-  description: "Have a good rest in StayNaum",
+  description: "Have good rest in StayNaum",
 }
 
 export default function RootLayout({
