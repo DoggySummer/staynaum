@@ -13,7 +13,7 @@ interface DbConfig {
 // 쿼리 실행 함수의 매개변수 타입 정의
 interface QueryParams {
   query: string
-  values?: any[]
+  values?: unknown[]
 }
 
 // 데이터베이스 설정

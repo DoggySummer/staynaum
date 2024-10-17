@@ -33,6 +33,7 @@ export default function CrudButtons({
       setNewUser({ name: "", email: "" })
       setMessage("User created successfully")
     } catch (error) {
+      console.log(error)
       setMessage("Failed to create user")
     }
   }
@@ -45,6 +46,7 @@ export default function CrudButtons({
       setUsers(fetchedUsers)
       setMessage("Users fetched successfully")
     } catch (error) {
+      console.log(error)
       setMessage("Failed to fetch users")
     }
   }
@@ -64,6 +66,8 @@ export default function CrudButtons({
       setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
       setMessage("User updated successfully")
     } catch (error) {
+      console.log(error)
+
       setMessage("Failed to update user")
     }
   }
@@ -75,6 +79,8 @@ export default function CrudButtons({
       setUsers(users.filter((user) => user.id !== id))
       setMessage("User deleted successfully")
     } catch (error) {
+      console.log(error)
+
       setMessage("Failed to delete user")
     }
   }
