@@ -12,6 +12,13 @@ import {
 } from "lucide-react"
 import { ko } from "date-fns/locale"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
@@ -32,8 +39,29 @@ import {
 } from "@/components/ui/accordion"
 import { Calendar } from "@/components/ui/calendar"
 import { DateRange } from "react-day-picker"
+import { useReservationStore } from "@/lib/store"
+import { formatDateToString, getDaysArrayFromDateRange } from "@/lib/utils"
 
 export default function Page() {
+  const {
+    checkInDate,
+    checkOutDate,
+    stayDate,
+    adultCount,
+    childCount,
+    infantCount,
+    bbqDate,
+    hotTubCount,
+    setCheckInDate,
+    setCheckOutDate,
+    setStayDate,
+    setAdultCount,
+    setChildCount,
+    setInfantCount,
+    setBBQDate,
+    setHotTubCount,
+  } = useReservationStore()
+
   const [bbqOption, setBbqOption] = useState(false)
   const [spaCount, setSpaCount] = useState(0)
   const [appliedCoupon, setAppliedCoupon] = useState("")
@@ -44,12 +72,6 @@ export default function Page() {
     minor: false,
     refund: false,
   })
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
-    from: new Date(2024, 9, 15),
-    to: new Date(2024, 9, 19),
-  })
-  const [guests, setGuests] = useState({ adults: 3, children: 0, infants: 0 })
-
   const basePrice = 400000
   const bbqPrice = 30000
   const spaPrice = 50000
@@ -57,6 +79,8 @@ export default function Page() {
     출석: 10000,
     신규가입: 20000,
   }
+
+  const stayDateArray = getDaysArrayFromDateRange(checkInDate, checkOutDate)
 
   const [totalPrice, setTotalPrice] = useState(basePrice * calculateNights())
   function calculateNights() {
@@ -100,14 +124,7 @@ export default function Page() {
     }
   }
 
-  const handleGuestChange = (
-    type: "adults" | "children" | "infants",
-    value: number
-  ) => {
-    setGuests((prev) => ({ ...prev, [type]: value }))
-  }
-
-  const totalGuests = guests.adults + guests.children + guests.infants
+  const totalGuests = adultCount + childCount + infantCount
 
   return (
     <div className="container mx-auto p-4 my-12">
@@ -122,7 +139,11 @@ export default function Page() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <CalendarDays className="text-gray-500" />
-                  <span>2024.10.11 ~ 2024.10.14 (4박)</span>
+                  <span>
+                    {formatDateToString(checkInDate)} ~{" "}
+                    {formatDateToString(checkOutDate)} &#40;
+                    {stayDateArray.length - 1}박&#41;
+                  </span>
                 </div>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -139,8 +160,8 @@ export default function Page() {
                     </DialogHeader>
                     <Calendar
                       mode="range"
-                      selected={dateRange}
-                      onSelect={setDateRange}
+                      selected={stayDate}
+                      onSelect={setStayDate}
                       numberOfMonths={2}
                       locale={ko}
                     />
@@ -151,8 +172,8 @@ export default function Page() {
                 <div className="flex items-center space-x-2">
                   <Users className="text-gray-500" />
                   <span>
-                    성인 {guests.adults}명, 어린이 {guests.children}명, 영아{" "}
-                    {guests.infants}명
+                    성인 {adultCount.toString()}명, 어린이{" "}
+                    {childCount.toString()}명, 영아 {infantCount.toString()}명
                   </span>
                 </div>
                 <Dialog>
@@ -186,13 +207,7 @@ export default function Page() {
                               variant="outline"
                               size="icon"
                               onClick={() =>
-                                handleGuestChange(
-                                  type as "adults" | "children" | "infants",
-                                  Math.max(
-                                    0,
-                                    guests[type as keyof typeof guests] - 1
-                                  )
-                                )
+                                setAdultCount((prev: number) => prev + 1)
                               }
                             >
                               <Minus className="h-4 w-4" />
@@ -201,12 +216,7 @@ export default function Page() {
                             <Button
                               variant="outline"
                               size="icon"
-                              onClick={() =>
-                                handleGuestChange(
-                                  type as "adults" | "children" | "infants",
-                                  guests[type as keyof typeof guests] + 1
-                                )
-                              }
+                              onClick={(prev) => setAdultCount(prev + 1)}
                             >
                               <Plus className="h-4 w-4" />
                             </Button>
@@ -239,22 +249,18 @@ export default function Page() {
                     <Utensils className="text-gray-500" />
                     <span>BBQ</span>
                   </div>
-                  <div className="flex space-x-2">
-                    <Button
-                      variant={bbqOption ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setBbqOption(true)}
-                    >
-                      사용하기
-                    </Button>
-                    <Button
-                      variant={!bbqOption ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setBbqOption(false)}
-                    >
-                      사용하지 않기
-                    </Button>
-                  </div>
+                  <Select onValueChange={(value) => setBBQDate(Number(value))}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="날짜 선택" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {stayDateArray.slice(0, -1).map((date) => (
+                        <SelectItem key={date} value={date.toString()}>
+                          {date}일
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <p className="text-sm text-gray-500">
                   구성 : 그릴, 일회용 석쇠, 토치, 일회용 장갑, 숯을 준비해

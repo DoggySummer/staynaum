@@ -11,7 +11,7 @@ interface User extends RowDataPacket {
 export async function GET() {
   try {
     const users = await executeQuery<User[]>({
-      query: "SELECT * FROM users",
+      query: "SELECT * FROM USER_TB",
       values: [],
     })
     return NextResponse.json(users)
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   try {
     const { name, email } = await request.json()
     const result = await executeQuery<OkPacket>({
-      query: "INSERT INTO users (name, email) VALUES (?, ?)",
+      query: "INSERT INTO USER_TB (name, email) VALUES (?, ?)",
       values: [name, email],
     })
     return NextResponse.json({ id: result.insertId, name, email })

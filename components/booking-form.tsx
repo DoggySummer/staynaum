@@ -26,13 +26,23 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { useReservationStore } from "@/lib/store"
 
 export function BookingFormComponent() {
-  const [checkIn, setCheckIn] = useState<Date>()
-  const [checkOut, setCheckOut] = useState<Date>()
-  const [adults, setAdults] = useState("2")
-  const [children, setChildren] = useState("0")
-  const [infants, setInfants] = useState("0")
+  const {
+    checkInDate,
+    checkOutDate,
+    adultCount,
+    childCount,
+    infantCount,
+    hotTubCount,
+    setCheckInDate,
+    setCheckOutDate,
+    setAdultCount,
+    setChildCount,
+    setInfantCount,
+    setHotTubCount,
+  } = useReservationStore()
 
   const guestOptions = ["0", "1", "2", "3", "4", "5"]
 
@@ -49,12 +59,12 @@ export function BookingFormComponent() {
                 variant={"outline"}
                 className={cn(
                   "w-full justify-start text-left font-normal",
-                  !checkIn && "text-muted-foreground"
+                  !checkInDate && "text-muted-foreground"
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {checkIn ? (
-                  format(checkIn, "yyyy년 M월 d일", { locale: ko })
+                {checkInDate ? (
+                  format(checkInDate, "yyyy년 M월 d일", { locale: ko })
                 ) : (
                   <span>날짜 선택</span>
                 )}
@@ -63,8 +73,10 @@ export function BookingFormComponent() {
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                selected={checkIn}
-                onSelect={setCheckIn}
+                selected={checkInDate ?? new Date()}
+                onSelect={(date: Date | undefined) =>
+                  date && setCheckInDate(date)
+                }
                 initialFocus
                 locale={ko}
               />
@@ -81,12 +93,12 @@ export function BookingFormComponent() {
                 variant={"outline"}
                 className={cn(
                   "w-full justify-start text-left font-normal",
-                  !checkOut && "text-muted-foreground"
+                  !checkOutDate && "text-muted-foreground"
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {checkOut ? (
-                  format(checkOut, "yyyy년 M월 d일", { locale: ko })
+                {checkOutDate ? (
+                  format(checkOutDate, "yyyy년 M월 d일", { locale: ko })
                 ) : (
                   <span>날짜 선택</span>
                 )}
@@ -95,8 +107,10 @@ export function BookingFormComponent() {
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                selected={checkOut}
-                onSelect={setCheckOut}
+                selected={checkOutDate ?? new Date()}
+                onSelect={(date: Date | undefined) =>
+                  date && setCheckOutDate(date)
+                }
                 initialFocus
                 locale={ko}
               />
@@ -112,7 +126,10 @@ export function BookingFormComponent() {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 성인
               </label>
-              <Select value={adults} onValueChange={setAdults}>
+              <Select
+                value={adultCount.toString()}
+                onValueChange={(value) => setAdultCount(parseInt(value, 10))}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="성인" />
                 </SelectTrigger>
@@ -139,7 +156,10 @@ export function BookingFormComponent() {
                   </Tooltip>
                 </TooltipProvider>
               </label>
-              <Select value={children} onValueChange={setChildren}>
+              <Select
+                value={childCount.toString()}
+                onValueChange={(value) => setChildCount(parseInt(value))}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="어린이" />
                 </SelectTrigger>
@@ -166,7 +186,10 @@ export function BookingFormComponent() {
                   </Tooltip>
                 </TooltipProvider>
               </label>
-              <Select value={infants} onValueChange={setInfants}>
+              <Select
+                value={infantCount.toString()}
+                onValueChange={(value) => setInfantCount(parseInt(value))}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="유아" />
                 </SelectTrigger>
