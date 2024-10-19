@@ -31,11 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <script
+        {/* <script
           type="text/javascript"
           defer
           src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERID_MAP}`}
-        ></script>
+        ></script> */}
         <Providers>
           <NavbarComponent />
           {children}
