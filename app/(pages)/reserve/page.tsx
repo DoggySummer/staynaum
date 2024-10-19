@@ -38,7 +38,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Calendar } from "@/components/ui/calendar"
-import { DateRange } from "react-day-picker"
 import { useReservationStore } from "@/lib/store"
 import { formatDateToString, getDaysArrayFromDateRange } from "@/lib/utils"
 
@@ -50,16 +49,11 @@ export default function Page() {
     adultCount,
     childCount,
     infantCount,
-    bbqDate,
-    hotTubCount,
-    setCheckInDate,
-    setCheckOutDate,
     setStayDate,
     setAdultCount,
     setChildCount,
     setInfantCount,
     setBBQDate,
-    setHotTubCount,
   } = useReservationStore()
 
   const [bbqOption, setBbqOption] = useState(false)
@@ -109,7 +103,7 @@ export default function Page() {
     price += spaCount * spaPrice
     if (appliedCoupon) price -= coupons[appliedCoupon as keyof typeof coupons]
     setTotalPrice(price)
-  }, [bbqOption, spaCount, appliedCoupon, coupons])
+  }, [bbqOption, spaCount, appliedCoupon, coupons, calculateNights])
 
   const handleAgreementChange = (key: "privacy" | "minor" | "refund") => {
     setAgreements((prev) => ({ ...prev, [key]: !prev[key] }))
@@ -255,6 +249,25 @@ export default function Page() {
                     <Utensils className="text-gray-500" />
                     <span>BBQ</span>
                   </div>
+                  <div className="flex space-x-2">
+                    <Button
+                      variant={bbqOption ? "default" : "outline"}
+                      onClick={() => setBbqOption(true)}
+                    >
+                      선택한다
+                    </Button>
+                    <Button
+                      variant={!bbqOption ? "default" : "outline"}
+                      onClick={() => {
+                        setBbqOption(false)
+                        setBBQDate(0) // BBQ 날짜 초기화
+                      }}
+                    >
+                      선택하지 않는다
+                    </Button>
+                  </div>
+                </div>
+                {bbqOption && (
                   <Select onValueChange={(value) => setBBQDate(Number(value))}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="날짜 선택" />
@@ -267,7 +280,7 @@ export default function Page() {
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
+                )}
                 <p className="text-sm text-gray-500">
                   구성 : 그릴, 일회용 석쇠, 토치, 일회용 장갑, 숯을 준비해
                   드립니다.
