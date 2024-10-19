@@ -81,12 +81,28 @@ export default function Page() {
   }
 
   const stayDateArray = getDaysArrayFromDateRange(checkInDate, checkOutDate)
-
+  const guestTypes = [
+    { key: "adult", label: "성인", value: adultCount, setValue: setAdultCount },
+    {
+      key: "child",
+      label: "어린이",
+      value: childCount,
+      setValue: setChildCount,
+    },
+    {
+      key: "infant",
+      label: "영아",
+      value: infantCount,
+      setValue: setInfantCount,
+    },
+  ]
+  //총 금액
   const [totalPrice, setTotalPrice] = useState(basePrice * calculateNights())
   function calculateNights() {
-    return 4 // 고정된 박 수
+    return stayDateArray.length - 1
   }
 
+  //우측 계산 영역
   useEffect(() => {
     let price = basePrice * calculateNights()
     if (bbqOption) price += bbqPrice
@@ -142,7 +158,7 @@ export default function Page() {
                   <span>
                     {formatDateToString(checkInDate)} ~{" "}
                     {formatDateToString(checkOutDate)} &#40;
-                    {stayDateArray.length - 1}박&#41;
+                    {calculateNights()}박&#41;
                   </span>
                 </div>
                 <Dialog>
@@ -190,37 +206,27 @@ export default function Page() {
                       <DialogTitle>인원 수정</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4">
-                      {["adults", "children", "infants"].map((type) => (
+                      {guestTypes.map(({ key, label, value, setValue }) => (
                         <div
-                          key={type}
+                          key={key}
                           className="flex items-center justify-between"
                         >
-                          <Label>
-                            {type === "adults"
-                              ? "성인"
-                              : type === "children"
-                              ? "어린이"
-                              : "영아"}
-                          </Label>
-                          <div className="flex items-center space-x-2">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              onClick={() =>
-                                setAdultCount((prev: number) => prev + 1)
-                              }
-                            >
-                              <Minus className="h-4 w-4" />
-                            </Button>
-                            <span>{guests[type as keyof typeof guests]}</span>
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              onClick={(prev) => setAdultCount(prev + 1)}
-                            >
-                              <Plus className="h-4 w-4" />
-                            </Button>
-                          </div>
+                          <Label>{label}</Label>
+                          <Select
+                            value={value.toString()}
+                            onValueChange={(count) => setValue(Number(count))}
+                          >
+                            <SelectTrigger className="w-[100px]">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {["0", "1", "2", "3", "4", "5"].map((_, i) => (
+                                <SelectItem key={i} value={i.toString()}>
+                                  {i}명
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </div>
                       ))}
                     </div>
@@ -331,9 +337,6 @@ export default function Page() {
               )}
             </CardContent>
           </Card>
-
-          {/* 이자리임 */}
-
           <Card>
             <CardHeader>
               <CardTitle>동의사항</CardTitle>
