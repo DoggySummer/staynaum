@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React from "react"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
 import { Calendar as CalendarIcon, Info } from "lucide-react"
@@ -35,13 +35,11 @@ export function BookingFormComponent() {
     adultCount,
     childCount,
     infantCount,
-    hotTubCount,
     setCheckInDate,
     setCheckOutDate,
     setAdultCount,
     setChildCount,
     setInfantCount,
-    setHotTubCount,
   } = useReservationStore()
 
   const guestOptions = ["0", "1", "2", "3", "4", "5"]
