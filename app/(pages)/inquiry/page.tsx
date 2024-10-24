@@ -11,7 +11,7 @@ interface User extends RowDataPacket {
 async function getUsers(): Promise<User[]> {
   try {
     const result = await executeQuery<RowDataPacket[]>({
-      query: "SELECT * FROM users",
+      query: "SELECT * FROM USER_TB",
       values: [],
     })
     const serializedUsers = result.map((user) => ({

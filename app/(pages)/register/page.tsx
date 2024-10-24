@@ -3,23 +3,54 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-import { signIn } from "next-auth/react"
-
-import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export default function Page() {
+export default function Component() {
   const router = useRouter()
   const [id, setID] = useState("")
   const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
+  const [repeatPassword, setRepeatPassword] = useState("")
+  const [emailError, setEmailError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+
+  function isValidEmail(email: string) {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    return emailRegex.test(email)
+  }
+
+  useEffect(() => {
+    if (email && !isValidEmail(email)) {
+      setEmailError("이메일 형식이 올바르지 않습니다.")
+    } else {
+      setEmailError("")
+    }
+  }, [email])
+
+  useEffect(() => {
+    if (password !== repeatPassword) {
+      setPasswordError("비밀번호가 일치하지 않습니다")
+    } else {
+      setPasswordError("")
+    }
+  }, [password, repeatPassword])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const data = { id, password }
+
+    if (emailError || passwordError) {
+      return // 유효성 검사 오류가 있으면 제출하지 않음
+    }
+
+    const data = {
+      id,
+      email,
+      password,
+    }
+
     try {
-      const response = await fetch("/api/signin", {
+      const response = await fetch("/api/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,8 +60,8 @@ export default function Page() {
       const result = await response.json()
       if (response.ok) {
         // 성공적으로 제출됨
-        alert("로그인이 완료되었습니다")
-        router.push("/")
+        alert("회원가입이 완료되었습니다")
+        router.push("/login")
       } else {
         // 오류 처리
         alert(result.error)
@@ -47,7 +78,7 @@ export default function Page() {
         <div className="max-w-md w-full space-y-8">
           <div>
             <h2 className="mt-3 text-center text-3xl font-extrabold text-gray-900 pb-20">
-              로그인
+              회원가입
             </h2>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -68,6 +99,26 @@ export default function Page() {
                 />
               </div>
               <div>
+                <Label htmlFor="email" className="sr-only">
+                  이메일
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className="outline-none focus:outline-none appearance-none relative block w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 placeholder-gray-500 text-gray-900 sm:text-sm"
+                  placeholder="이메일"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {emailError && (
+                  <p className="mt-2 text-sm text-red-600" role="alert">
+                    {emailError}
+                  </p>
+                )}
+              </div>
+              <div>
                 <Label htmlFor="password" className="sr-only">
                   비밀번호
                 </Label>
@@ -82,6 +133,26 @@ export default function Page() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+              <div>
+                <Label htmlFor="repeatPassword" className="sr-only">
+                  비밀번호 확인
+                </Label>
+                <Input
+                  id="repeatPassword"
+                  name="repeatPassword"
+                  type="password"
+                  required
+                  className="appearance-none relative block w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none sm:text-sm"
+                  placeholder="비밀번호 확인"
+                  value={repeatPassword}
+                  onChange={(e) => setRepeatPassword(e.target.value)}
+                />
+                {passwordError && (
+                  <p className="mt-2 text-sm text-red-600" role="alert">
+                    {passwordError}
+                  </p>
+                )}
+              </div>
             </div>
 
             <div>
@@ -89,81 +160,10 @@ export default function Page() {
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
               >
-                로그인
+                회원가입
               </Button>
             </div>
           </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">또는</span>
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <div>
-                <Button
-                  variant="outline"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                  onClick={() => signIn("naver")}
-                >
-                  <Image
-                    className="h-5 w-5"
-                    src="/sns_naver.svg"
-                    alt="Naver logo"
-                    width={20}
-                    height={20}
-                  />
-                </Button>
-              </div>
-              <div>
-                <Button
-                  variant="outline"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                  onClick={() => signIn("kakao")}
-                >
-                  <Image
-                    className="h-5 w-5"
-                    src="/kakao.webp"
-                    alt="Kakao logo"
-                    width={20}
-                    height={20}
-                  />
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div className="text-sm">
-              <a
-                href="/register"
-                className="font-medium text-gray-900 hover:text-gray-700"
-              >
-                회원가입
-              </a>
-            </div>
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-gray-900 hover:text-gray-700"
-              >
-                아이디 찾기
-              </a>
-            </div>
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-gray-900 hover:text-gray-700"
-              >
-                비밀번호 찾기
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
