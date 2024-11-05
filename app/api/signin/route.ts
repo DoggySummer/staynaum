@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     })
     if (result.length === 0) {
       return NextResponse.json(
-        { error: "유저 정보가 존재하지 않습니다" },
+        { error: "유저 정보가 존재하지 않습니다." },
         { status: 404 }
       )
     }
