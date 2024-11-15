@@ -20,12 +20,12 @@ export function NavbarComponent() {
               >
                 호텔소개
               </Link>
-              <Link
+              {/* <Link
                 href="/inquiry"
                 className="text-gray-800 hover:text-gray-600 px-3 py-2 text-sm font-medium"
               >
                 고객문의
-              </Link>
+              </Link> */}
               <Link
                 href="/offers"
                 className="text-gray-800 hover:text-gray-600 px-3 py-2 text-sm font-medium"
@@ -39,9 +39,9 @@ export function NavbarComponent() {
               >
                 로그인
               </Link>
-              <span className="text-gray-500 hover:text-gray-600 px-3 py-2 text-sm font-medium">
+              {/* <span className="text-gray-500 hover:text-gray-600 px-3 py-2 text-sm font-medium">
                 ko
-              </span>
+              </span> */}
             </div>
           </div>
         </div>

@@ -80,7 +80,6 @@ export default function CrudButtons({
       setMessage("User deleted successfully")
     } catch (error) {
       console.log(error)
-
       setMessage("Failed to delete user")
     }
   }
