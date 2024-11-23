@@ -24,7 +24,7 @@ export const useReservationStore = create<ReservationState>((set) => ({
   checkInDate: new Date(),
   checkOutDate: new Date(),
   stayDate: undefined,
-  adultCount: 0,
+  adultCount: 1,
   childCount: 0,
   infantCount: 0,
   bbqDate: 0,

@@ -132,7 +132,7 @@ export function BookingFormComponent() {
                   <SelectValue placeholder="성인" />
                 </SelectTrigger>
                 <SelectContent>
-                  {guestOptions.map((option) => (
+                  {["1", "2", "3", "4", "5"].map((option) => (
                     <SelectItem key={option} value={option}>
                       {option}명
                     </SelectItem>

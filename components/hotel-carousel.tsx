@@ -14,6 +14,7 @@ export function HotelMainCarouselComponent() {
   const settings = {
     dots: false,
     infinite: true,
+    useTransform: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -29,9 +30,8 @@ export function HotelMainCarouselComponent() {
             <Image
               src={src}
               alt={`Hotel image ${index + 1}`}
-              layout="fill"
-              objectFit="cover"
-              priority={index === 0}
+              fill
+              style={{ objectFit: "cover" }}
             />
           </div>
         ))}

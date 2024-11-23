@@ -15,6 +15,10 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  const disabledDays = [
+    { from: new Date(0), to: new Date() },
+    { from: new Date(2024, 10, 27), to: new Date(2024, 10, 28) },
+  ]
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -57,7 +61,8 @@ function Calendar({
         IconLeft: () => <ChevronLeft className="h-4 w-4" />,
         IconRight: () => <ChevronRight className="h-4 w-4" />,
       }}
-      disabled={{ before: new Date() }}
+      // disabled={{ before: new Date() }}
+      disabled={disabledDays}
       {...props}
     />
   )
